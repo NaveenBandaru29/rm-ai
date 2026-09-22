@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1; /* Primary Indigo */
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81; /* Deep Navy Dark */
+  --color-brand-950: #1e1b4b;
+  
+  --color-accent-500: #0ea5e9; /* Electric Blue Accent */
+  --color-secondary-500: #8b5cf6; /* Violet Accent */
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased transition-colors duration-200;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border-b border-slate-200 shadow-sm dark:bg-brand-900/70 dark:border-brand-800/50;
+  }
+  
+  .glass-card {
+    @apply bg-white backdrop-blur-sm border border-slate-200 shadow-md dark:bg-brand-900/80 dark:border-brand-800 dark:shadow-brand-950/50;
+  }
+}
