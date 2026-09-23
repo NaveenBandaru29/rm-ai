@@ -144,7 +144,7 @@ export const Checkout = () => {
                       disabled={processing}
                       sx={{ py: 2, borderRadius: 3, fontWeight: 700, fontSize: { xs: '1rem', sm: '1.1rem' }, boxShadow: '0 8px 16px rgba(99,102,241,0.25)' }}
                     >
-                      {processing ? <CircularProgress size={26} color="inherit" /> : `Pay ₹${course.price} securely`}
+                      {processing ? <CircularProgress size={26} color="inherit" /> : `Pay ₹${course.discountedPrice.toLocaleString('en-IN')} securely`}
                     </Button>
                     
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mt: 1, color: 'text.secondary' }}>
@@ -176,19 +176,19 @@ export const Checkout = () => {
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                   <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>Original Price</Typography>
-                  <Typography variant="body2">₹{course.price}</Typography>
+                  <Typography variant="body2">₹{course.actualPrice.toLocaleString('en-IN')}</Typography>
                 </Box>
                 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
                   <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>Discount</Typography>
-                  <Typography variant="body2" sx={{ color: 'error.light' }}>₹0.00</Typography>
+                  <Typography variant="body2" sx={{ color: 'error.light' }}>-₹{(course.actualPrice - course.discountedPrice).toLocaleString('en-IN')}</Typography>
                 </Box>
 
                 <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', mb: 3 }} />
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4, alignItems: 'center' }}>
                   <Typography variant="h6" sx={{ fontWeight: 700 }}>Total</Typography>
-                  <Typography variant="h4" sx={{ fontWeight: 800 }}>₹{course.price}</Typography>
+                  <Typography variant="h4" sx={{ fontWeight: 800 }}>₹{course.discountedPrice.toLocaleString('en-IN')}</Typography>
                 </Box>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

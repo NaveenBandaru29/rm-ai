@@ -36,6 +36,15 @@ const brandTheme = createTheme({
       fontWeight: 500,
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1280,
+      xl: 1536,
+    },
+  },
   shape: {
     borderRadius: 4, // MUI standard base (so borderRadius: 4 = 16px, borderRadius: 2 = 8px)
   },

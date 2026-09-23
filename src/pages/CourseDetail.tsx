@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Clock, Star, Users, BookOpen, CheckCircle, PlayCircle, ShieldCheck, ChevronRight, ChevronDown as ExpandMoreIcon, FileText, HelpCircle, Download } from 'lucide-react';
-import { Button, Card, CardContent, Typography, Box, Accordion, AccordionSummary, AccordionDetails, CircularProgress } from '@mui/material';
+import { Button, Card, CardContent, Typography, Box, Accordion, AccordionSummary, AccordionDetails, CircularProgress, Chip } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { CourseService } from '../services/CourseService';
@@ -67,13 +67,13 @@ export const CourseDetail = () => {
       {/* Course Hero */}
       <Box sx={{ position: 'relative', bgcolor: 'primary.900', color: 'primary.contrastText', pt: { xs: 14, sm: 16, lg: 18 }, pb: { xs: 8, lg: 12 }, overflow: 'hidden' }}>
         <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, #1e1b4b 0%, rgba(30, 27, 75, 0.8) 100%)', zIndex: 1 }} />
-        <Box 
+        <Box
           component="img"
-          src={course.thumbnailUrl} 
-          alt={course.title} 
+          src={course.thumbnailUrl}
+          alt={course.title}
           sx={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.2 }}
         />
-        
+
         <Box sx={{ maxWidth: 'lg', mx: 'auto', px: { xs: 2, sm: 3, lg: 4 }, position: 'relative', zIndex: 2 }}>
           <Box sx={{ maxWidth: 800 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'primary.200', fontSize: '0.875rem', fontWeight: 500, mb: 3 }}>
@@ -81,15 +81,15 @@ export const CourseDetail = () => {
               <ChevronRight className="h-4 w-4" />
               <span>{course.level}</span>
             </Box>
-            
+
             <Typography variant="h2" component="h1" sx={{ fontWeight: 700, mb: 2.5, lineHeight: 1.2, fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' } }}>
               {course.title}
             </Typography>
-            
+
             <Typography variant="h6" component="p" sx={{ mb: 3.5, color: 'primary.100', fontWeight: 400, maxWidth: 700, lineHeight: 1.6, fontSize: { xs: '0.95rem', sm: '1.15rem' } }}>
               {course.shortDescription}
             </Typography>
-            
+
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 2, sm: 3, md: 4 }, color: 'primary.200', fontSize: '0.875rem' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
@@ -112,10 +112,10 @@ export const CourseDetail = () => {
       {/* Course Content Grid */}
       <Box sx={{ maxWidth: 'lg', mx: 'auto', px: { xs: 2, sm: 3, lg: 4 }, py: 8 }}>
         <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' }, gap: { xs: 6, lg: 8 }, alignItems: 'start' }}>
-          
+
           {/* Left Column (Main Content) */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            
+
             <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
               <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>About this course</Typography>
               <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.8, whiteSpace: 'pre-line' }}>
@@ -145,12 +145,12 @@ export const CourseDetail = () => {
                   const durationStr = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
 
                   return (
-                    <Accordion 
-                      key={module.id} 
-                      disableGutters 
+                    <Accordion
+                      key={module.id}
+                      disableGutters
                       elevation={0}
                       defaultExpanded={mIdx === 0}
-                      sx={{ 
+                      sx={{
                         '&:before': { display: 'none' },
                         border: '1px solid',
                         borderColor: 'rgba(0,0,0,0.05)',
@@ -162,12 +162,12 @@ export const CourseDetail = () => {
                         '&:hover': { boxShadow: '0 8px 30px rgba(99,102,241,0.08)' }
                       }}
                     >
-                      <AccordionSummary 
+                      <AccordionSummary
                         expandIcon={<ExpandMoreIcon className="text-primary-main" />}
-                        sx={{ 
-                          bgcolor: '#f8fafc', 
+                        sx={{
+                          bgcolor: '#fefefe',
                           p: { xs: 2, md: 3 },
-                          '&.Mui-expanded': { borderBottom: '1px solid rgba(0,0,0,0.05)' } 
+                          '&.Mui-expanded': { borderBottom: '1px solid rgba(0,0,0,0.05)' }
                         }}
                       >
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', pr: 2, alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
@@ -192,18 +192,18 @@ export const CourseDetail = () => {
                       <AccordionDetails sx={{ p: 0, bgcolor: 'white' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                           {module.lessons.map((lesson, lIdx) => (
-                            <Box 
-                              key={lesson.id} 
-                              sx={{ 
+                            <Box
+                              key={lesson.id}
+                              sx={{
                                 display: 'flex', alignItems: 'center', gap: 3, py: 2.5, px: { xs: 2, md: 4 },
                                 borderBottom: lIdx !== module.lessons.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none',
                                 transition: 'background-color 0.2s',
                                 '&:hover': { bgcolor: '#f8fafc' }
                               }}
                             >
-                              <Box sx={{ 
-                                bgcolor: lesson.type === 'video' ? 'primary.50' : lesson.type === 'quiz' ? 'warning.50' : 'success.50', 
-                                p: 1.5, borderRadius: '50%', display: 'flex' 
+                              <Box sx={{
+                                bgcolor: lesson.type === 'video' ? 'primary.50' : lesson.type === 'quiz' ? 'warning.50' : 'success.50',
+                                p: 1.5, borderRadius: '50%', display: 'flex'
                               }}>
                                 {lesson.type === 'video' ? (
                                   <PlayCircle className="h-5 w-5 text-primary-main" />
@@ -213,12 +213,12 @@ export const CourseDetail = () => {
                                   <FileText className="h-5 w-5 text-success-main" />
                                 )}
                               </Box>
-                              
+
                               <Box sx={{ flexGrow: 1 }}>
                                 <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.primary', mb: 0.5 }}>{lesson.title}</Typography>
                                 <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'capitalize' }}>{lesson.type}</Typography>
                               </Box>
-                              
+
                               <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>{lesson.durationMinutes} min</Typography>
                             </Box>
                           ))}
@@ -235,23 +235,42 @@ export const CourseDetail = () => {
           <Box sx={{ position: { xs: 'static', lg: 'sticky' }, top: 100, order: { xs: -1, lg: 0 } }}>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
               <Card sx={{ boxShadow: 12, borderRadius: 4, border: 'none', overflow: 'hidden' }}>
-                <Box sx={{ height: 220, position: 'relative' }}>
+                <Box sx={{ height: { xs: 190, sm: 220 }, position: 'relative' }}>
                   <img src={course.thumbnailUrl} alt={course.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'rgba(0,0,0,0.4)', transition: 'background-color 0.3s', '&:hover': { bgcolor: 'rgba(0,0,0,0.2)' } }}>
                     <PlayCircle className="h-16 w-16 text-white opacity-90 cursor-pointer" />
                   </Box>
                 </Box>
-                <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-                  <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 3 }}>₹{course.price}</Typography>
+                <CardContent sx={{ p: { xs: 2.5, sm: 3.5, md: 4 } }}>
+                  <Box sx={{ mb: 3 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1.5, flexWrap: 'wrap' }}>
+                      <Typography variant="h3" sx={{ fontWeight: 800, color: '#1e1b4b', fontSize: { xs: '1.75rem', sm: '2.15rem' }, letterSpacing: '-0.02em' }}>
+                        ₹{course.discountedPrice.toLocaleString('en-IN')}
+                      </Typography>
+                      {course.actualPrice > course.discountedPrice && (
+                        <Typography variant="h6" sx={{ textDecoration: 'line-through', color: 'text.secondary', fontWeight: 500 }}>
+                          ₹{course.actualPrice.toLocaleString('en-IN')}
+                        </Typography>
+                      )}
+                    </Box>
+                    {course.actualPrice > course.discountedPrice && (
+                      <Chip
+                        label={`${Math.round(((course.actualPrice - course.discountedPrice) / course.actualPrice) * 100)}% OFF LIMITED TIME`}
+                        color="error"
+                        size="small"
+                        sx={{ fontWeight: 700, mt: 1, borderRadius: 1 }}
+                      />
+                    )}
+                  </Box>
                   <Button fullWidth size="large" variant="contained" onClick={handleEnroll} sx={{ mb: 1, py: 1.5, fontSize: '1.05rem', fontWeight: 600 }}>
                     Start Learning (Demo Preview)
                   </Button>
-                  <Button 
-                    fullWidth 
-                    size="large" 
-                    variant="outlined" 
+                  <Button
+                    fullWidth
+                    size="large"
+                    variant="outlined"
                     startIcon={<Download className="h-5 w-5" />}
-                    onClick={() => alert('Brochure download will be implemented later!')} 
+                    onClick={() => alert('Brochure download will be implemented later!')}
                     sx={{ mb: 2, py: 1.5, fontSize: '1.05rem', fontWeight: 600, borderRadius: 6, borderWidth: 2, '&:hover': { borderWidth: 2 } }}
                   >
                     Download Brochure
@@ -259,7 +278,7 @@ export const CourseDetail = () => {
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mb: 4, fontSize: '0.8rem' }}>
                     Full demo preview accessible without login.
                   </Typography>
-                  
+
                   <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 2 }}>This course includes:</Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, fontSize: '0.875rem', color: 'text.secondary' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>

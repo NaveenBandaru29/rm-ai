@@ -8,7 +8,8 @@ export interface Course {
   instructorId: string;
   level: 'Beginner' | 'Intermediate' | 'Advanced';
   durationHours: number;
-  price: number;
+  actualPrice: number;
+  discountedPrice: number;
   rating: number;
   reviewCount: number;
   thumbnailUrl: string;

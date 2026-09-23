@@ -1,7 +1,8 @@
+import { CourseCard } from '../components/common/CourseCard';
 import { useEffect, useState, useMemo } from 'react';
-import { Link as RouterLink, useParams } from 'react-router-dom';
-import { Search, Filter, BookOpen, Star, PlayCircle, ArrowRight, ChevronDown } from 'lucide-react';
-import { Button, Card, CardContent, Typography, Box, TextField, Chip, Skeleton, Divider, Tooltip } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { Search, Filter, Star, ChevronDown } from 'lucide-react';
+import { Button, Card, CardContent, Typography, Box, TextField, Chip, Skeleton, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { CourseService } from '../services/CourseService';
@@ -293,141 +294,13 @@ export const Catalog = () => {
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8"
+                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-5 sm:gap-6 lg:gap-8"
               >
                 {filteredCourses.map((course) => (
                   <motion.div key={course.id} variants={fadeIn} whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
-                    <Card sx={{
-                      display: 'flex', flexDirection: 'column', height: '100%',
-                      borderRadius: 4, overflow: 'hidden',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.08)',
-                      transition: 'all 0.3s ease',
-                      '&:hover': { boxShadow: '0 25px 50px rgba(99,102,241,0.15)', borderColor: 'primary.300', transform: 'translateY(-4px)' }
-                    }}>
-                      <Box sx={{ position: 'relative', height: 240, overflow: 'hidden' }}>
-                        <Box
-                          component="img"
-                          src={course.thumbnailUrl}
-                          alt={course.title}
-                          sx={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.7s ease', '&:hover': { transform: 'scale(1.08)' } }}
-                        />
-                        <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.2) 50%, transparent 100%)' }} />
-
-                        <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', gap: 1 }}>
-                          <Chip label={course.level} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.95)', color: '#1e1b4b', fontWeight: 700, backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                          {course.isBestseller && (
-                            <Chip label="Bestseller" size="small" sx={{ bgcolor: 'warning.main', color: 'warning.contrastText', fontWeight: 700, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                          )}
-                        </Box>
-
-                        <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s', '&:hover': { opacity: 1 } }}>
-                          <Box sx={{ bgcolor: 'primary.main', borderRadius: '50%', p: 1.5, display: 'flex', boxShadow: '0 0 30px rgba(99,102,241,0.6)' }}>
-                            <PlayCircle className="h-12 w-12 text-white" />
-                          </Box>
-                        </Box>
-
-                        <Box sx={{ position: 'absolute', bottom: 16, left: 16, right: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, bgcolor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', px: 2, py: 0.75, borderRadius: 3, backdropFilter: 'blur(8px)' }}>
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <Typography variant="body2" sx={{ fontWeight: 700, color: 'white' }}>{course.rating}</Typography>
-                          </Box>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, bgcolor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', px: 2, py: 0.75, borderRadius: 3, backdropFilter: 'blur(8px)' }}>
-                            <BookOpen className="h-4 w-4 text-white" />
-                            <Typography variant="body2" sx={{ fontWeight: 600, color: 'white' }}>{course.durationHours}h</Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-
-                      <CardContent sx={{ flexGrow: 1, p: 4 }}>
-                        <Typography variant="h5" component="h3" sx={{ fontWeight: 800, mb: 2, lineHeight: 1.3, color: '#1e1b4b', transition: 'color 0.2s', '&:hover': { color: 'primary.main' } }}>
-                          {course.title}
-                        </Typography>
-                        <Typography variant="body1" color="text.secondary" sx={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', mb: 4, lineHeight: 1.6 }}>
-                          {course.shortDescription}
-                        </Typography>
-
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1 }}>
-                          {course.skills.slice(0, 3).map(skill => (
-                            <Chip key={skill} label={skill} size="small" sx={{ bgcolor: 'slate.100', color: 'slate.700', fontWeight: 600, borderRadius: 1.5, '&:hover': { bgcolor: 'slate.200' } }} />
-                          ))}
-                          {course.skills.length > 3 && (
-                            <Tooltip
-                              title={
-                                <Box sx={{ p: 0.75 }}>
-                                  <Typography variant="caption" sx={{ display: 'block', color: '#94a3b8', fontWeight: 700, mb: 1.2, textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: '0.7rem' }}>
-                                    Additional Skills ({course.skills.length - 3})
-                                  </Typography>
-                                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                                    {course.skills.slice(3).map(skill => (
-                                      <Chip
-                                        key={skill}
-                                        label={skill}
-                                        size="small"
-                                        sx={{
-                                          bgcolor: 'rgba(99, 102, 241, 0.2)',
-                                          color: '#e0e7ff',
-                                          fontWeight: 600,
-                                          fontSize: '0.75rem',
-                                          borderRadius: 1.5,
-                                          border: '1px solid rgba(165, 180, 252, 0.3)'
-                                        }}
-                                      />
-                                    ))}
-                                  </Box>
-                                </Box>
-                              }
-                              arrow
-                              placement="top"
-                              slotProps={{
-                                tooltip: {
-                                  sx: {
-                                    bgcolor: '#0f172a',
-                                    color: '#ffffff',
-                                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4)',
-                                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                                    borderRadius: 2.5,
-                                    p: 1.5,
-                                    maxWidth: 290
-                                  }
-                                },
-                                arrow: {
-                                  sx: { color: '#0f172a', '&::before': { border: '1px solid rgba(255, 255, 255, 0.15)' } }
-                                }
-                              }}
-                            >
-                              <Chip
-                                label={`+${course.skills.length - 3}`}
-                                size="small"
-                                sx={{
-                                  bgcolor: 'rgba(99, 102, 241, 0.08)',
-                                  color: '#4f46e5',
-                                  fontWeight: 700,
-                                  border: '1px solid rgba(99, 102, 241, 0.25)',
-                                  cursor: 'pointer',
-                                  transition: 'all 0.2s ease',
-                                  '&:hover': {
-                                    bgcolor: '#4f46e5',
-                                    color: '#ffffff',
-                                    borderColor: '#4f46e5',
-                                    transform: 'scale(1.05)'
-                                  }
-                                }}
-                              />
-                            </Tooltip>
-                          )}
-                        </Box>
-                      </CardContent>
-
-                      <Box sx={{ p: 4, pt: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(0,0,0,0.05)', mt: 'auto', paddingTop: 3 }}>
-                        <Typography variant="h4" sx={{ fontWeight: 800, color: '#1e1b4b', letterSpacing: '-0.02em' }}>₹{course.price}</Typography>
-                        <Button component={RouterLink} to={`/courses/${course.slug}`} variant="contained" color="primary" sx={{ borderRadius: 6, fontWeight: 700, px: 3, py: 1 }} endIcon={<ArrowRight className="h-4 w-4" />}>
-                          View Course
-                        </Button>
-                      </Box>
-                    </Card>
+                    <CourseCard course={course} />
                   </motion.div>
-                ))}
-              </motion.div>
+                ))}</motion.div>
             )}
           </div>
         </div>
