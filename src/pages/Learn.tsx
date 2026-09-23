@@ -8,10 +8,12 @@ import {
   PlayCircle, CheckCircle2, Circle, ChevronDown, ArrowLeft, 
   LayoutList, FileText, CheckCircle, Menu as MenuIcon
 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { CourseService } from '../services/CourseService';
 // import { EnrollmentService } from '../services/EnrollmentService';
 // import { AuthService } from '../services/AuthService';
 import type { Course, Lesson, Enrollment, Module } from '../types';
+
 
 export const Learn = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -36,8 +38,8 @@ export const Learn = () => {
         //   return;
         // }
 
-        const allCourses = await CourseService.getAllCourses();
-        const foundCourse = allCourses.find(c => c.slug === slug);
+        // Fix #6: use getCourseBySlug instead of fetching all courses
+        const foundCourse = await CourseService.getCourseBySlug(slug!);
         
         if (!foundCourse) {
           navigate('/courses');
@@ -61,6 +63,8 @@ export const Learn = () => {
         // Find first lesson to play, or first incomplete lesson
         if (foundCourse.modules.length > 0 && foundCourse.modules[0].lessons.length > 0) {
           let targetLesson = foundCourse.modules[0].lessons[0];
+          // Fix #5: use a local flag to avoid reading stale expandedModules state
+          let moduleWasSet = false;
           
           // Try to find the first incomplete lesson
           for (const m of foundCourse.modules) {
@@ -68,13 +72,15 @@ export const Learn = () => {
             if (incomplete) {
               targetLesson = incomplete;
               setExpandedModules([m.id]);
+              moduleWasSet = true;
               break;
             }
           }
           
           setActiveLesson(targetLesson);
-          if (expandedModules.length === 0) {
-             setExpandedModules([foundCourse.modules[0].id]);
+          // Only expand the first module if no specific module was set above
+          if (!moduleWasSet) {
+            setExpandedModules([foundCourse.modules[0].id]);
           }
         }
       } catch (err) {
@@ -167,7 +173,12 @@ export const Learn = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', bgcolor: '#f8fafc', overflow: 'hidden' }}>
+      <Helmet>
+        <title>{activeLesson.title} • {course.title} • RM AI</title>
+        <meta name="description" content={`Learning: ${activeLesson.title} from the ${course.title} course on RM AI.`} />
+      </Helmet>
       
+
       {/* Top Navigation Bar */}
       <Box sx={{ height: 64, bgcolor: '#1e1b4b', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 3, flexShrink: 0, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>

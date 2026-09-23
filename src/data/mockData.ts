@@ -1,11 +1,12 @@
 import type { Category, Course, Instructor } from '../types';
 
 export const categories: Category[] = [
-  { id: 'cat-1', slug: 'ai', name: 'Artificial Intelligence', description: 'Master AI concepts and applications.' },
-  { id: 'cat-2', slug: 'machine-learning', name: 'Machine Learning', description: 'Learn to build predictive models and ML pipelines.' },
-  { id: 'cat-3', slug: 'data-science', name: 'Data Science', description: 'Analyze data, build models, and drive decisions.' },
-  { id: 'cat-4', slug: 'data-analytics', name: 'Data Analytics', description: 'Extract insights from data using SQL, BI tools.' }
+  { id: 'cat-1', slug: 'ai', name: 'Artificial Intelligence', description: 'Master AI concepts and applications.', icon: 'brain' },
+  { id: 'cat-2', slug: 'machine-learning', name: 'Machine Learning', description: 'Learn to build predictive models and ML pipelines.', icon: 'cpu' },
+  { id: 'cat-3', slug: 'data-science', name: 'Data Science', description: 'Analyze data, build models, and drive decisions.', icon: 'bar-chart' },
+  { id: 'cat-4', slug: 'data-analytics', name: 'Data Analytics', description: 'Extract insights from data using SQL, BI tools.', icon: 'pie-chart' }
 ];
+
 
 export const instructors: Instructor[] = [
   { id: 'inst-1', name: 'Dr. Alan Turing', bio: 'Pioneer in AI and computer science with 15+ years of industry experience.', avatarUrl: 'https://i.pravatar.cc/150?u=alan', role: 'Lead AI Instructor' },
@@ -30,6 +31,7 @@ export const courses: Course[] = [
     reviewCount: 3200,
     thumbnailUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
     skills: ['Python', 'Machine Learning', 'Statistics', 'Tableau', 'Data Science'],
+    isBestseller: true,
     modules: [
       {
         id: 'c1-m1', title: 'Data Science Foundation', order: 1,
@@ -157,6 +159,7 @@ export const courses: Course[] = [
     reviewCount: 1500,
     thumbnailUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
     skills: ['Deep Learning', 'NLP', 'Computer Vision', 'Reinforcement Learning', 'TensorFlow'],
+    isBestseller: true,
     modules: [
       {
         id: 'c2-m1', title: 'Neural Networks', order: 1,
@@ -372,6 +375,7 @@ export const courses: Course[] = [
     reviewCount: 1100,
     thumbnailUrl: 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?auto=format&fit=crop&q=80&w=800',
     skills: ['Machine Learning', 'TensorFlow', 'Deep Learning', 'Neural Networks'],
+    isBestseller: true,
     modules: [
       {
         id: 'c4-m1', title: 'Introduction to TensorFlow', order: 1,

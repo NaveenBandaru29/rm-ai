@@ -14,7 +14,9 @@ export interface Course {
   thumbnailUrl: string;
   skills: string[];
   modules: Module[];
+  isBestseller?: boolean;
 }
+
 
 export interface Module {
   id: string;

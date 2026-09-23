@@ -2,10 +2,15 @@ import { Box, Container, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 export const NotFound = () => {
   return (
     <Box sx={{ pt: 20, pb: 16, minHeight: '80vh', bgcolor: '#f8fafc', display: 'flex', alignItems: 'center' }}>
+      <Helmet>
+        <title>404 • Page Not Found • RM AI</title>
+        <meta name="description" content="The page you're looking for does not exist on RM AI." />
+      </Helmet>
       <Container maxWidth="md" sx={{ textAlign: 'center' }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <Typography variant="h1" sx={{ fontWeight: 900, color: 'primary.main', fontSize: { xs: '6rem', md: '10rem' }, lineHeight: 1 }}>

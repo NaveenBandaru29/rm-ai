@@ -1,8 +1,15 @@
 import { Box, Container, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
+
 
 export const About = () => {
   return (
     <Box sx={{ pt: { xs: 12, sm: 16 }, pb: { xs: 8, sm: 12 }, minHeight: '80vh', bgcolor: '#f8fafc', px: { xs: 2, sm: 0 } }}>
+      <Helmet>
+        <title>About Us • RM AI</title>
+        <meta name="description" content="Learn about RM AI's mission to democratize elite-level AI and Data Science education, founded by industry veterans." />
+      </Helmet>
+
       <Container maxWidth="md">
         <Typography variant="h2" component="h1" sx={{ fontWeight: 800, mb: 4, color: '#1e1b4b', fontSize: { xs: '2rem', sm: '2.75rem', md: '3.75rem' } }}>
           About RM AI

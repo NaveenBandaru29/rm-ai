@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, Users, Star, Award, BrainCircuit, PlayCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Star, Award, BrainCircuit, PlayCircle, Cpu, BarChart2, PieChart } from 'lucide-react';
 import { Button, Card, CardContent, Typography, Box, Chip, Tooltip } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
+
 import { motion } from 'framer-motion';
 import { CourseService } from '../services/CourseService';
 import type { Course, Category } from '../types';
+
+const categoryIconMap: Record<string, React.ElementType> = {
+  'brain': BrainCircuit,
+  'cpu': Cpu,
+  'bar-chart': BarChart2,
+  'pie-chart': PieChart,
+};
+
+const getCategoryIcon = (icon?: string): React.ElementType => {
+  return icon ? (categoryIconMap[icon] ?? BrainCircuit) : BrainCircuit;
+};
+
 
 const testimonials = [
   { id: 1, name: 'Priya Sharma', role: 'Data Scientist at TechCorp', content: 'The Generative AI course completely transformed how I approach problem-solving at work. The curriculum is incredibly well-structured.', avatar: 'https://i.pravatar.cc/150?u=priya' },
@@ -59,6 +73,11 @@ export const Home = () => {
 
   return (
     <div className="flex flex-col overflow-hidden bg-slate-50">
+      <Helmet>
+        <title>RM AI • Master AI & Data Science</title>
+        <meta name="description" content="Elevate your career with premium, interactive AI and Data Science courses designed by industry experts. From foundations to advanced MLOps." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="relative bg-[#1e1b4b] text-white py-24 sm:py-32 lg:py-40 min-h-[90vh] flex flex-col justify-center">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
@@ -182,8 +201,9 @@ export const Home = () => {
 
                       <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', gap: 1 }}>
                         <Chip label={course.level} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.95)', color: '#1e1b4b', fontWeight: 700, backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                        {/* Optionally show Bestseller for the first item on Home page too */}
-                        <Chip label="Bestseller" size="small" sx={{ bgcolor: 'warning.main', color: 'warning.contrastText', fontWeight: 700, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                        {course.isBestseller && (
+                          <Chip label="Bestseller" size="small" sx={{ bgcolor: 'warning.main', color: 'warning.contrastText', fontWeight: 700, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                        )}
                       </Box>
 
                       <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s', '&:hover': { opacity: 1 } }}>
@@ -390,7 +410,7 @@ export const Home = () => {
                     transition: 'all 0.3s', '&:hover': { borderColor: 'primary.300', bgcolor: 'primary.50', boxShadow: '0 10px 20px rgba(99,102,241,0.1)' }
                   }}>
                     <Box sx={{ w: 72, h: 72, borderRadius: 4, bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 3, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                      <BrainCircuit className="h-8 w-8 text-indigo-600" />
+                      {(() => { const Icon = getCategoryIcon(category.icon); return <Icon className="h-8 w-8 text-indigo-600" />; })()}
                     </Box>
                     <Typography variant="h5" sx={{ fontWeight: 700, mb: 1, color: '#1e1b4b' }}>{category.name}</Typography>
                     <Typography variant="body2" color="text.secondary">{category.description}</Typography>

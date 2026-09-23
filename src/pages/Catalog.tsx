@@ -3,8 +3,10 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import { Search, Filter, BookOpen, Star, PlayCircle, ArrowRight, ChevronDown } from 'lucide-react';
 import { Button, Card, CardContent, Typography, Box, TextField, Chip, Skeleton, Divider, Tooltip } from '@mui/material';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { CourseService } from '../services/CourseService';
 import type { Course, Category } from '../types';
+
 
 export const Catalog = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -73,6 +75,11 @@ export const Catalog = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
+      <Helmet>
+        <title>Browse Courses • RM AI</title>
+        <meta name="description" content="Explore our curated selection of AI, Machine Learning, Data Science, and Data Analytics courses. Filter by level and category." />
+      </Helmet>
+
       {/* Header */}
       <Box sx={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)',
@@ -288,7 +295,7 @@ export const Catalog = () => {
                 animate="visible"
                 className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8"
               >
-                {filteredCourses.map((course, idx) => (
+                {filteredCourses.map((course) => (
                   <motion.div key={course.id} variants={fadeIn} whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
                     <Card sx={{
                       display: 'flex', flexDirection: 'column', height: '100%',
@@ -308,7 +315,7 @@ export const Catalog = () => {
 
                         <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', gap: 1 }}>
                           <Chip label={course.level} size="small" sx={{ bgcolor: 'rgba(255,255,255,0.95)', color: '#1e1b4b', fontWeight: 700, backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                          {idx === 0 && (
+                          {course.isBestseller && (
                             <Chip label="Bestseller" size="small" sx={{ bgcolor: 'warning.main', color: 'warning.contrastText', fontWeight: 700, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
                           )}
                         </Box>

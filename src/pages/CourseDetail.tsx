@@ -3,8 +3,10 @@ import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Clock, Star, Users, BookOpen, CheckCircle, PlayCircle, ShieldCheck, ChevronRight, ChevronDown as ExpandMoreIcon, FileText, HelpCircle, Download } from 'lucide-react';
 import { Button, Card, CardContent, Typography, Box, Accordion, AccordionSummary, AccordionDetails, CircularProgress } from '@mui/material';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { CourseService } from '../services/CourseService';
 import type { Course } from '../types';
+
 
 export const CourseDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -57,6 +59,11 @@ export const CourseDetail = () => {
 
   return (
     <Box sx={{ bgcolor: '#f8fafc', minHeight: '100vh', pb: 10 }}>
+      <Helmet>
+        <title>{course.title} • RM AI</title>
+        <meta name="description" content={course.shortDescription} />
+      </Helmet>
+
       {/* Course Hero */}
       <Box sx={{ position: 'relative', bgcolor: 'primary.900', color: 'primary.contrastText', pt: { xs: 14, sm: 16, lg: 18 }, pb: { xs: 8, lg: 12 }, overflow: 'hidden' }}>
         <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, #1e1b4b 0%, rgba(30, 27, 75, 0.8) 100%)', zIndex: 1 }} />

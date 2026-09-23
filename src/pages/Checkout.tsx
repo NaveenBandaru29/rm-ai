@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { CourseService } from '../services/CourseService';
 import { EnrollmentService } from '../services/EnrollmentService';
 import { AuthService } from '../services/AuthService';
+import { Helmet } from 'react-helmet-async';
 import type { Course } from '../types';
 
 export const Checkout = () => {
@@ -53,7 +54,7 @@ export const Checkout = () => {
 
       const success = await EnrollmentService.enrollInCourse(userId, course.id);
       if (success) {
-        navigate('/dashboard', { state: { enrollmentSuccess: true, courseId: course.id } });
+        navigate('/courses');
       } else {
         setError('Payment failed. Please try again.');
       }
@@ -83,6 +84,10 @@ export const Checkout = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#f8fafc', py: { xs: 4, md: 8 }, px: { xs: 2, sm: 4 } }}>
+      <Helmet>
+        <title>{course ? `Checkout • ${course.title} • RM AI` : 'Checkout • RM AI'}</title>
+        <meta name="description" content={`Complete your enrollment in ${course?.title || 'course'} on RM AI.`} />
+      </Helmet>
       <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
         
         <Box sx={{ mb: { xs: 4, sm: 6 } }}>
